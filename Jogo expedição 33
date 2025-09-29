@@ -1,0 +1,226 @@
+#include <stdio.h>   // Para fun��es de entrada e sa�da (printf, scanf, getchar)
+#include <stdlib.h>  // Para limpar a tela (system)
+#include <string.h>  // Para manipula��o de strings (n�o estritamente necess�rio aqui, mas bom ter)
+#include <locale.h>  // Para suporte a acentua��o (setlocale)
+
+// Bloco para compatibilidade de sistema operacional (Windows e POSIX/Linux/macOS)
+#ifdef _WIN32
+#include <windows.h> // Para a fun��o Sleep() no Windows
+#else
+#include <unistd.h>  // Para a fun��o usleep() em sistemas POSIX
+#endif
+
+// Prot�tipos das fun��es (declara��es para o compilador saber que elas existem)
+void print_lento(const char *texto);
+void pausa_ms(int milissegundos);
+void limpar_buffer_entrada();
+void introducao();
+void primeira_escolha();
+void caminho_cauteloso();
+void caminho_direto();
+void final_conhecimento();
+void final_fracasso();
+void final_transcendencia();
+void final_escuridao();
+void jogar_novamente();
+
+/**
+ * @brief Imprime o texto lentamente, caractere por caractere.
+ * @param texto A string a ser impressa.
+ */
+void print_lento(const char *texto) {
+    for (int i = 0; texto[i] != '\0'; i++) {
+        putchar(texto[i]);
+        fflush(stdout); // Garante que o caractere seja impresso imediatamente
+        pausa_ms(40);
+    }
+    printf("\n");
+}
+
+/**
+ * @brief Pausa a execu��o do programa por um n�mero de milissegundos.
+ * Funciona tanto em Windows quanto em sistemas POSIX.
+ * @param milissegundos O tempo de pausa em milissegundos.
+ */
+void pausa_ms(int milissegundos) {
+#ifdef _WIN32
+    Sleep(milissegundos);
+#else
+    usleep(milissegundos * 1000); // usleep recebe microssegundos
+#endif
+}
+
+/**
+ * @brief Limpa qualquer caractere extra do buffer de entrada (stdin).
+ * Essencial ap�s usar scanf para evitar bugs na pr�xima leitura.
+ */
+void limpar_buffer_entrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// ======================= L�GICA DO JOGO =======================
+
+void introducao() {
+    setlocale(LC_ALL, "Portuguese"); // Configura a localidade para suportar acentua��o
+    system("cls || clear"); // Comando para limpar a tela (Windows || Linux/macOS)
+    print_lento("=============================================");
+    print_lento("      EXPEDI��O 33: O CORA��O DA PENUMBRA      ");
+    print_lento("=============================================");
+    pausa_ms(1000);
+    print_lento("Voc� � o Comandante da nave explorat�ria 'Stargazer'.");
+    print_lento("Sua miss�o: investigar a anomalia 'A Penumbra', uma regi�o do espa�o onde as leis da f�sica parecem se distorcer.");
+    print_lento("A tripula��o confia em seu julgamento. Cada decis�o � crucial.");
+    pausa_ms(2000);
+    print_lento("Sua nave chega � borda da anomalia. Sensores captam flutua��es de energia inst�veis, mas tamb�m uma fonte de energia coesa e poderosa vindo do centro.");
+    primeira_escolha();
+}
+
+void primeira_escolha() {
+    pausa_ms(1000);
+    printf("\n");
+    print_lento("O que voc� faz?");
+    print_lento("1. Manter dist�ncia e lan�ar uma sonda n�o-tripulada para coletar dados preliminares. (Abordagem Cautelosa)");
+    print_lento("2. Navegar diretamente para a fonte de energia. A miss�o recompensa os ousados. (Abordagem Direta)");
+
+    char escolha = '0';
+    while (escolha != '1' && escolha != '2') {
+        printf(">> Digite sua escolha (1 ou 2): ");
+        scanf(" %c", &escolha); // O espa�o antes de %c ignora espa�os/newlines anteriores
+        limpar_buffer_entrada();
+    }
+
+    if (escolha == '1') {
+        caminho_cauteloso();
+    } else {
+        caminho_direto();
+    }
+}
+
+void caminho_cauteloso() {
+    printf("\n");
+    print_lento("Voc� ordena o lan�amento da sonda 'Vanguard'. Ela entra na Penumbra e transmite dados fascinantes.");
+    print_lento("As imagens mostram estruturas cristalinas flutuantes que pulsam com uma luz suave.");
+    print_lento("De repente, um pulso de energia massivo emana do centro da anomalia. A sonda � vaporizada instantaneamente.");
+    pausa_ms(1000);
+    print_lento("Seus sensores detectam que o pulso abriu uma 'passagem' tempor�ria e est�vel atrav�s do campo ca�tico.");
+    print_lento("Esta pode ser sua �nica chance de entrar com seguran�a.");
+    pausa_ms(1000);
+    printf("\n");
+    print_lento("O que voc� ordena?");
+    print_lento("1. Entrar na passagem imediatamente. � um risco calculado.");
+    print_lento("2. Recuar e analisar os dados do pulso. Seguran�a em primeiro lugar.");
+
+    char escolha = '0';
+    while (escolha != '1' && escolha != '2') {
+        printf(">> Digite sua escolha (1 ou 2): ");
+        scanf(" %c", &escolha);
+        limpar_buffer_entrada();
+    }
+
+    if (escolha == '1') {
+        final_conhecimento();
+    } else {
+        final_fracasso();
+    }
+}
+
+void caminho_direto() {
+    printf("\n");
+    print_lento("Com coragem, voc� comanda a Stargazer para dentro da Penumbra.");
+    print_lento("A nave treme violentamente enquanto escudos desviam de bols�es de energia ca�tica.");
+    print_lento("Voc� chega a uma �rea central, surpreendentemente calma. No centro, flutua uma entidade singular, uma esfera de luz negra que absorve toda a luz ao redor.");
+    pausa_ms(1000);
+    print_lento("A entidade n�o parece hostil. Ela emite uma frequ�ncia baixa, quase como um convite... ou um aviso.");
+    print_lento("Sua Oficial de Ci�ncias sugere que a entidade pode ser a fonte de toda a anomalia.");
+    pausa_ms(1000);
+    printf("\n");
+    print_lento("Qual sua ordem?");
+    print_lento("1. Tentar estabelecer comunica��o, enviando um pulso de energia de baixa frequ�ncia e um pacote de dados sobre a humanidade.");
+    print_lento("2. Usar o Canh�o de Part�culas para 'sondar' a entidade, for�ando uma rea��o para coletar dados sobre sua composi��o.");
+
+    char escolha = '0';
+    while (escolha != '1' && escolha != '2') {
+        printf(">> Digite sua escolha (1 ou 2): ");
+        scanf(" %c", &escolha);
+        limpar_buffer_entrada();
+    }
+    
+    if (escolha == '1') {
+        final_transcendencia();
+    } else {
+        final_escuridao();
+    }
+}
+
+// ======================= FINAIS DO JOGO =======================
+
+void final_conhecimento() {
+    printf("\n");
+    print_lento("VOC� ESCOLHEU ENTRAR NA PASSAGEM.");
+    print_lento("A Stargazer navega pela passagem est�vel. No centro, voc� encontra o que restou de uma civiliza��o antiga.");
+    print_lento("Eles criaram a Penumbra para guardar seu vasto conhecimento. A passagem era um teste de coragem.");
+    print_lento("Voc� coleta dados que levar�o a humanidade a uma nova era de prosperidade tecnol�gica e sabedoria.");
+    printf("\n");
+    print_lento("FIM - A Miss�o foi um sucesso retumbante. Voc� voltou como um her�i.");
+    jogar_novamente();
+}
+
+void final_fracasso() {
+    printf("\n");
+    print_lento("VOC� ESCOLHEU RECUAR.");
+    print_lento("Voc� ordena a retirada. No momento em que a Stargazer se afasta, a passagem se fecha com uma viol�ncia incalcul�vel.");
+    print_lento("A Penumbra inteira colapsa em si mesma, desaparecendo para sempre.");
+    print_lento("A oportunidade foi perdida. O maior mist�rio do universo se foi, e voc� estava na porta dele.");
+    printf("\n");
+    print_lento("FIM - A tripula��o est� segura, mas a miss�o foi um fracasso. O 'e se' vai assombr�-lo para sempre.");
+    jogar_novamente();
+}
+
+void final_transcendencia() {
+    printf("\n");
+    print_lento("VOC� ESCOLHEU A COMUNICA��O.");
+    print_lento("A entidade responde. Sua mente e a de toda a tripula��o s�o inundadas com trilh�es de anos de conhecimento c�smico.");
+    print_lento("N�o � uma criatura, mas uma consci�ncia. A Penumbra � seu 'corpo'.");
+    print_lento("Ela oferece � humanidade um lugar ao seu lado, para evoluir al�m da forma f�sica. Voc� aceita.");
+    print_lento("A Stargazer se desintegra pacificamente, e sua tripula��o se torna uma com o universo.");
+    printf("\n");
+    print_lento("FIM - A humanidade transcendeu. Um final que ningu�m poderia prever.");
+    jogar_novamente();
+}
+
+void final_escuridao() {
+    printf("\n");
+    print_lento("VOC� ESCOLHEU FOR�AR UMA REA��O.");
+    print_lento("O Canh�o de Part�culas atinge a esfera de luz negra. Por um segundo, nada acontece.");
+    print_lento("Ent�o, a escurid�o se expande. N�o � a aus�ncia de luz, mas uma for�a ativa que consome tudo.");
+    print_lento("Alarmes soam por toda a nave enquanto a escurid�o engole a Stargazer. O �ltimo som que voc� ouve � o sil�ncio absoluto.");
+    printf("\n");
+    print_lento("FIM - Voc� provocou uma for�a que n�o compreendia. A Expedi��o 33 foi declarada perdida com todas as m�os.");
+    jogar_novamente();
+}
+
+void jogar_novamente() {
+    pausa_ms(2000);
+    printf("\n");
+    print_lento("Voc� gostaria de jogar novamente? (s/n)");
+    
+    char escolha = '0';
+    while (escolha != 's' && escolha != 'n') {
+        printf(">> Digite sua escolha (s ou n): ");
+        scanf(" %c", &escolha);
+        limpar_buffer_entrada();
+    }
+    
+    if (escolha == 's') {
+        introducao();
+    } else {
+        print_lento("Obrigado por jogar Expedi��o 33.");
+    }
+}
+
+// Ponto de entrada principal do programa
+int main() {
+    introducao();
+    return 0; // Termina o programa com sucesso
+}
